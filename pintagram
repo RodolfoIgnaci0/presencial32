@@ -1,0 +1,94 @@
+
+CREATE DATABASE pintagram;
+
+CREATE TABLE usuario(
+id_user SERIAL,
+user_name VARCHAR(20),
+password VARCHAR(20),
+PRIMARY KEY (id_user)
+);
+
+CREATE TABLE image(
+id_image SERIAL,
+url VARCHAR(200),
+likes INTEGER,
+PRIMARY KEY (id_image),
+id_user SERIAL REFERENCES usuario (id_user)
+);
+
+CREATE TABLE tag(
+id_tag SERIAL,
+tag_name VARCHAR(20),
+PRIMARY KEY (id_tag)
+);
+
+CREATE TABLE img_tag(
+id_image SERIAL REFERENCES image (id_image),
+id_tag SERIAL REFERENCES tag (id_tag)
+);
+
+INSERT INTO usuario VALUES(1, 'usuario1', '123');
+INSERT INTO usuario VALUES(2, 'usuario2', '123');
+INSERT INTO usuario VALUES(3, 'usuario3', '123');
+INSERT INTO usuario VALUES(4, 'usuario4', '123');
+INSERT INTO usuario VALUES(5, 'usuario5', '123');
+INSERT INTO usuario VALUES(6, 'usuario6', '123');
+INSERT INTO usuario VALUES(7, 'usuario7', '123');
+INSERT INTO usuario VALUES(8, 'usuario8', '123');
+INSERT INTO usuario VALUES(9, 'usuario9', '123');
+INSERT INTO usuario VALUES(10, 'usuario10', '123');
+
+INSERT INTO tag VALUES(1, 'tag1');
+INSERT INTO tag VALUES(2, 'tag2');
+INSERT INTO tag VALUES(3, 'tag3');
+INSERT INTO tag VALUES(4, 'tag4');
+INSERT INTO tag VALUES(5, 'tag5');
+INSERT INTO tag VALUES(6, 'tag6');
+INSERT INTO tag VALUES(7, 'tag7');
+INSERT INTO tag VALUES(8, 'tag8');
+INSERT INTO tag VALUES(9, 'tag9');
+INSERT INTO tag VALUES(10, 'tag10');
+
+ALTER TABLE image ADD COLUMN 'nombre' VARCHAR(50);
+
+INSERT INTO IMAGE VALUES(1, 'url1',1,1,'nombre1');
+INSERT INTO IMAGE VALUES(2, 'url2',1,4,'nombre2');
+INSERT INTO IMAGE VALUES(3, 'url3',1,7,'nombre3');
+INSERT INTO IMAGE VALUES(4, 'url4',1,8,'nombre4');
+INSERT INTO IMAGE VALUES(5, 'url5',1,1,'nombre5');
+INSERT INTO IMAGE VALUES(6, 'url6',1,10,'nombre6');
+INSERT INTO IMAGE VALUES(7, 'url7',1,3,'nombre7');
+INSERT INTO IMAGE VALUES(8, 'url8',1,2,'nombre8');
+INSERT INTO IMAGE VALUES(9, 'url9',1,2,'nombre9');
+INSERT INTO IMAGE VALUES(10, 'url10',1,4,'nombre10');
+
+INSERT INTO img_tag VALUES(1,1);
+INSERT INTO img_tag VALUES(2,2);
+INSERT INTO img_tag VALUES(3,3);
+INSERT INTO img_tag VALUES(4,3);
+INSERT INTO img_tag VALUES(5,7);
+INSERT INTO img_tag VALUES(6,3);
+INSERT INTO img_tag VALUES(7,7);
+INSERT INTO img_tag VALUES(8,8);
+INSERT INTO img_tag VALUES(9,2);
+INSERT INTO img_tag VALUES(10,1);
+
+SELECT * FROM calls
+INNER JOIN users on calls.user_id = users.id
+WHERE users.first_name = ‘carlos’
+ORDER BY date desc;
+
+SELECT nombre, likes from image;
+
+SELECT u.user_name AS "Nombre Usuario", i.nombre AS "Fotos que le pertenecen" from usuario u
+INNER JOIN image i on u.id_user = i.id_user;
+
+SELECT t.tag_name AS "Tag", count(it.id_image) AS "Cantidad asociada al tag" from tag t
+LEFT JOIN img_tag it on it.id_tag = t.id_tag
+GROUP BY tag_name
+ORDER BY tag_name ASC; 
+
+
+
+
+
